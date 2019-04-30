@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StudentExercises
 {
@@ -83,8 +84,6 @@ namespace StudentExercises
             jordan.assignExercise(bobby, weatherData);
             jordan.assignExercise(sable, nutshell);
             jordan.assignExercise(sable, weatherData);
-            jordan.assignExercise(sydney, dictionaries);
-            jordan.assignExercise(sydney, fitpup);
             jordan.assignExercise(matt, nutshell);
             jordan.assignExercise(matt, fitpup);
 
@@ -97,8 +96,6 @@ namespace StudentExercises
             josh.assignExercise(bobby, fitpup);
             josh.assignExercise(sable, fitpup);
             josh.assignExercise(sable, dictionaries);
-            josh.assignExercise(sydney, nutshell);
-            josh.assignExercise(sydney, weatherData);
             josh.assignExercise(matt, fitpup);
             josh.assignExercise(matt, nutshell);
 
@@ -111,8 +108,6 @@ namespace StudentExercises
             kim.assignExercise(bobby, weatherData);
             kim.assignExercise(sable, fitpup);
             kim.assignExercise(sable, nutshell);
-            kim.assignExercise(sydney, nutshell);
-            kim.assignExercise(sydney, weatherData);
             kim.assignExercise(matt, nutshell);
             kim.assignExercise(matt, fitpup);
 
@@ -134,13 +129,48 @@ namespace StudentExercises
         exercises.Add(dictionaries);
         exercises.Add(fitpup);
 
-        foreach(Student student in students){
-            Console.WriteLine(student.firstName);
-            foreach(string exercise in student.currentExercises){
-                Console.WriteLine(exercise);
-            }
-        }
+        List<Instructor> instructors = new List<Instructor>(){
+            kim,
+            jordan,
+            josh
+        };
 
+        List<Cohort> cohorts = new List<Cohort>(){
+            one,
+            two,
+            three
+        };
+
+        // foreach(Student student in students){
+        //     Console.WriteLine(student.firstName);
+        //     foreach(string exercise in student.currentExercises){
+        //         Console.WriteLine(exercise);
+        //     }
+        // }
+
+//         List exercises for the JavaScript language by using the Where() LINQ method.
+    IEnumerable<Exercise> JSExercises = exercises.Where(e => e.language == "Javascript");
+
+// List students in a particular cohort by using the Where() LINQ method.
+    IEnumerable<Student> cohortOneStudents = students.Where(s => s.cohort == 1);
+// List instructors in a particular cohort by using the Where() LINQ method.
+    IEnumerable<Instructor> cohortOneInstructors = instructors.Where(i => i.cohortNumber == 1);
+// Sort the students by their last name.
+    IEnumerable<Student> orderedStudents = students.OrderBy(s => s.lastName);
+    orderedStudents.ToList().ForEach(student => Console.WriteLine(student.firstName));
+// Display any students that aren't working on any exercises (Make sure one of your student instances don't have any exercises. Create a new student if you need to.)
+    var lazyStudents = students.Where(student => student.currentExercises.Count() == 0);
+    lazyStudents.ToList().ForEach(student => Console.WriteLine($"This student is lazy! {student.firstName}"));
+// Which student is working on the most exercises? Make sure one of your students has more exercises than the others.
+   IEnumerable<Student> hardWorkingStudents =  students.OrderByDescending(m => m.currentExercises.Count());
+
+    Student hardestWorkingStudent = hardWorkingStudents.First();
+//    hardestWorkingStudent.ForEach(student => Console.WriteLine(student));
+
+// How many students in each cohort?
+    one.students.Count();
+    two.students.Count();
+    three.students.Count();
 
 
 
